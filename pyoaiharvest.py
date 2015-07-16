@@ -60,24 +60,29 @@ if __name__ == "__main__":
 
     (options, args) = parser.parse_args()
 
-    if options.link is None or options.filename is None:
+    if options.link is None:
         parser.print_help()
-        parser.error("a repository url and output file are required")
+        parser.error("a repository url is required")
 
     if options:
         serverString = verbOpts = fromDate = untilDate = mdPrefix = oaiSet = ''
         if options.link:
             serverString = options.link
+        if options.setName:
+            oaiSet = options.setName
         if options.filename:
             outFileName = options.filename
+        elif options.setName:
+        	outFileName = "%s.xml" % oaiSet
+        else:
+        	outFileName = "fullFeed.xml"
         if options.fromDate:
             fromDate = options.fromDate
         if options.until:
             untilDate = options.until
         if options.mdprefix:
             mdPrefix = options.mdprefix
-        if options.setName:
-            oaiSet = options.setName
+        
     else:
         print usage
 
